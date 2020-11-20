@@ -188,7 +188,7 @@
 			deletehistory(theme) {
 				var _this = this;
 				    _this.auiDialog.title = '提示';
-				    _this.auiDialog.msg = '您点击了delete删除模态弹窗！';
+				    _this.auiDialog.msg = '确定清空全部历史记录？';
 				    _this.auiDialog.items = [];
 				    _this.auiDialog.btns = [
 				        {name: '取消'},

@@ -33,6 +33,33 @@
 				"navigationBarTitleText":"静流的云音乐"
 			}
 		}
+        ,{
+            "path" : "pages/login/emaillogin",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "网易邮箱账号登陆",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+		,{
+		    "path" : "pages/login/phonelogin",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "手机号码登陆",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/login/index",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "登陆",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
