@@ -1,0 +1,75 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	    {
+            "path" : "pages/home/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "静流的云音乐",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/user/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "静流的云音乐",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/video/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "静流的云音乐",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+		{
+			"path":"pages/search/index",
+			"style":{
+				"navigationBarTitleText":"静流的云音乐"
+			}
+		}
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "静流的云音乐",
+		"navigationBarBackgroundColor": "#EC4141",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar":{
+		"color":"#000000",
+		"selectedColor":"#D9220C",
+		"backgroundColor":"#FFFFFF",
+		"borderStyle":"black",
+		"list":[
+			{
+				"pagePath":"pages/home/index",
+				"text":"首页",
+				"iconPath":"static/icon/home.png",
+				"selectedIconPath":"static/icon/home-check.png"
+			},
+			{
+				"pagePath":"pages/search/index",
+				"text":"搜索",
+				"iconPath":"static/icon/search.png",
+				"selectedIconPath":"static/icon/search-check.png"
+			},
+			{
+				"pagePath":"pages/video/index",
+				"text":"视频",
+				"iconPath":"static/icon/video.png",
+				"selectedIconPath":"static/icon/video-check.png"
+			},
+			{
+				"pagePath":"pages/user/index",
+				"text":"我的",
+				"iconPath":"static/icon/user.png",
+				"selectedIconPath":"static/icon/user-check.png"
+			}
+		]
+	}
+}
