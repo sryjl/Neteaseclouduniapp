@@ -3,7 +3,10 @@
     "pages/home/index",
     "pages/user/index",
     "pages/video/index",
-    "pages/search/index"
+    "pages/search/index",
+    "pages/login/emaillogin",
+    "pages/login/phonelogin",
+    "pages/login/index"
   ],
   "subPackages": [],
   "window": {
@@ -45,5 +48,5 @@
     ]
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap54.json"
+  "sitemapLocation": "sitemap18.json"
 }

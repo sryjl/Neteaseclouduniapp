@@ -33,7 +33,7 @@
   -webkit-flex-direction: row;
           flex-direction: row;
   position: relative;
-  padding: 16rpx;
+  padding: 7px;
   background-color: #ffffff;
 }
 .uni-searchbar__box.data-v-64ee3838 {

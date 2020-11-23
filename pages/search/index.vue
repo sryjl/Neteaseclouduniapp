@@ -1,7 +1,7 @@
 <template>
 	<view :style="{height:swiperHeight+'px'}">
 		<view @click.stop="focussearch">
-			<uni-search-bar :placeholder="searchPlaceHolder" @confirm="search($event)" v-model="keyword" @input="getsuggestion"></uni-search-bar>
+			<uni-search-bar :placeholder="searchPlaceHolder" @confirm="search(e)" v-model="keyword" @input="getsuggestion"></uni-search-bar>
 		</view>
 		<view class="showSearchcontent" v-if="suggestionlist.length !== 0">
 			<view class="searchconent">
@@ -46,38 +46,33 @@
 				</view>
 			</view>
 			<button :class="{hotserchmore:true, iconfont:true,hide:showView}" plain @click="moreHotlist($event)">展开更多热搜&#xe791;</button>
-		</view>	
+		</view>
 		<!-- au-dialog -->
-		<aui-dialog 
-	    ref="dialog"
-	    :title="auiDialog.title"
-	    :msg="auiDialog.msg"
-	    :btns="auiDialog.btns"
-	    :mask="auiDialog.mask"
-	    :maskTapClose="auiDialog.maskTapClose"
-	    :items="auiDialog.items"
-	    :theme="auiDialog.theme"
-	    @callback="dialogCallback"
-	></aui-dialog>
+		<aui-dialog ref="dialog" :title="auiDialog.title" :msg="auiDialog.msg" :btns="auiDialog.btns" :mask="auiDialog.mask"
+		 :maskTapClose="auiDialog.maskTapClose" :items="auiDialog.items" :theme="auiDialog.theme" @callback="dialogCallback"></aui-dialog>
 	</view>
-	
+
 
 </template>
 
 <script>
-	import {aui} from '../../components/aui-dialog/common/aui/js/aui.js'
+	import {
+		aui
+	} from '../../components/aui-dialog/common/aui/js/aui.js'
 	export default {
 		data() {
 			return {
 				auiDialog: {
-				        title: '',
-				        msg: '',
-				        btns: [{name: '确定'}],
-				        mask: true,
-				        maskTapClose: true,
-				        items: [],
-				        theme: 1,
-				      },
+					title: '',
+					msg: '',
+					btns: [{
+						name: '确定'
+					}],
+					mask: true,
+					maskTapClose: true,
+					items: [],
+					theme: 1,
+				},
 				blurHeight: 500,
 				swiperHeight: 500,
 				keyword: '',
@@ -92,15 +87,15 @@
 		},
 		methods: {
 			// 回调函数解决历史删除和取消
-			 dialogCallback(e){
-			    var _this = this;
-				if(e.index == "0"){
+			dialogCallback(e) {
+				var _this = this;
+				if (e.index == "0") {
 					return
 				}
 				uni.removeStorageSync('historykeyword')
 				this.historylist = []
-				},
-				
+			},
+
 			async getPlaceHolder() {
 				const [error, res] = await uni.request({
 					url: 'http://localhost:3000/search/default'
@@ -130,26 +125,39 @@
 				this.hotlist = res.data.data
 				this.showView = true
 			},
-			async getsuggestion() {
-				if (!this.keyword.value) {
-					this.suggestionlist = []
-					return
-				}
+			async getsuggestion(e) {
 				if (this.isSend) {
 					return
 				}
+				if (!e) {
+					this.suggestionlist = []
+					return
+				}
+				console.log(e.value.length)
+				e = e.value.replace(/\s*/g, "")
+				console.log(e.length)
+				if (!e.length) {
+					this.suggestionlist = []
+					return
+				}
+				console.log(e)
+
 				this.isSend = true
 				const [error, res] = await uni.request({
 					url: 'http://localhost:3000/search/suggest',
 					data: {
-						keywords: this.keyword.value.trim(),
+						keywords: e,
 						type: 'mobile'
 					}
 				})
 				if (res.data.code !== 200) {
 					return false
 				}
-				this.suggestionlist = res.data.result.allMatch
+				console.log(res)
+				console.log(res.data.result.allMatch)
+				if (!res.data.result.allMatch) {
+					this.suggestionlist = []
+				} else(this.suggestionlist = res.data.result.allMatch)
 				setTimeout(() => {
 					this.isSend = false
 				}, 300)
@@ -172,7 +180,7 @@
 			},
 			async getHistory() {
 				const historyStorage = await uni.getStorageSync('historykeyword')
-				if(!historyStorage){
+				if (!historyStorage) {
 					return
 				}
 				this.historylist = historyStorage
@@ -183,19 +191,21 @@
 					val.value = this.searchPlaceHolder
 				}
 				this.saveHistory(val.value)
-
 			},
 			deletehistory(theme) {
 				var _this = this;
-				    _this.auiDialog.title = '提示';
-				    _this.auiDialog.msg = '确定清空全部历史记录？';
-				    _this.auiDialog.items = [];
-				    _this.auiDialog.btns = [
-				        {name: '取消'},
-				        {name: '删除'}
-				    ];
-				    _this.auiDialog.theme = theme;
-				    _this.$refs.dialog.show();
+				_this.auiDialog.title = '提示';
+				_this.auiDialog.msg = '确定清空全部历史记录？';
+				_this.auiDialog.items = [];
+				_this.auiDialog.btns = [{
+						name: '取消'
+					},
+					{
+						name: '删除'
+					}
+				];
+				_this.auiDialog.theme = theme;
+				_this.$refs.dialog.show();
 			}
 		},
 		created() {
@@ -234,7 +244,6 @@
 			width: 30rpx;
 			vertical-align: middle;
 		}
-
 	}
 
 	.hotlist::after {
@@ -243,7 +252,6 @@
 		height: 0;
 		clear: both;
 		visibility: hidden;
-
 	}
 
 	.lefthot {
@@ -275,7 +283,6 @@
 				margin-bottom: 6rpx;
 			}
 		}
-
 	}
 
 	.righthot {
@@ -306,7 +313,6 @@
 				margin-bottom: 6rpx;
 			}
 		}
-
 	}
 
 	.hotserchmore {

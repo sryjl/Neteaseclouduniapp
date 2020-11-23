@@ -1,5 +1,7 @@
 # Neteaseclouduniapp
+### 2020/11/24
+基本完成个人信息界面，解决了搜索界面的小bug，导入了vue-cookie来管理cookie（h5+app端采用plus，小程序采取本地存储方案【暂没有写】），实现了退出，登陆功能以及跳转
 ### 2020/11/20 
-做好了封面，以及基于手机号和邮箱的登陆功能，由于uniapp无法存储cookie，所以采用localStorage存储cookietoken 
+做好了封面，以及基于手机号和邮箱的登陆功能，为适配小程序，所以采用localStorage存储cookietoken 
 ### 2020/11/19
 暂时只做好了搜索界面,实现功能有，热搜榜，更多热搜，模糊搜索，历史记录，删除历史记录

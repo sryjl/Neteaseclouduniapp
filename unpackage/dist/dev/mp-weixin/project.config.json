@@ -10,6 +10,8 @@
   "libVersion": "",
   "appid": "wxc65335bd5ce27a36",
   "projectname": "Neteasecloud",
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
   "condition": {
     "search": {
       "list": []

@@ -1,0 +1,147 @@
+.userpic {
+  position: relative;
+  height: 350rpx;
+}
+.userpic .userimg {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -75rpx);
+          transform: translate(-50%, -75rpx);
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  height: 150rpx;
+  width: 150rpx;
+  border: 15rpx solid rgba(233, 235, 236, 0.5);
+  z-index: 1;
+}
+.userpic .userbg {
+  position: absolute;
+  width: 100%;
+  height: 500rpx;
+  opacity: 0.5;
+  z-index: 0;
+}
+.userpic .username {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #282C35;
+  -webkit-transform: translate(-50%, 95rpx);
+          transform: translate(-50%, 95rpx);
+  z-index: 1;
+}
+.userpic .userlevel {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  height: 40rpx;
+  width: 80rpx;
+  line-height: 40rpx;
+  font-size: 15rpx;
+  font-style: italic;
+  text-align: center;
+  background-color: #808080;
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
+  opacity: 0.7;
+  color: #FFFFFF;
+  -webkit-transform: translate(-50%, 135rpx);
+          transform: translate(-50%, 135rpx);
+  z-index: 1;
+}
+.userdetail {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  position: relative;
+  z-index: 1;
+  height: 150rpx;
+  width: 100%;
+  -webkit-border-top-left-radius: 60rpx;
+          border-top-left-radius: 60rpx;
+  -webkit-border-top-right-radius: 60rpx;
+          border-top-right-radius: 60rpx;
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom: 1px solid #E9EBEC;
+}
+.userdetail view {
+  height: 100%;
+  width: 25%;
+}
+.userdetail view .data {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  height: 50%;
+  display: block;
+  padding-top: 35rpx;
+  font-size: 35rpx;
+  font-weight: bold;
+}
+.userdetail view .write {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  height: 50%;
+  display: block;
+  color: #808080;
+  padding-top: 15rpx;
+  font-size: 15rpx;
+}
+.card {
+  background-color: #FFFFFF;
+  height: 250rpx;
+  padding-top: 20rpx;
+}
+.card .musicicon {
+  position: relative;
+  height: 100rpx;
+  width: 100%;
+  padding-left: 50rpx;
+}
+.card .musicicon .musicnavgate {
+  padding: 10rpx;
+  background-color: rgba(233, 235, 236, 0.5);
+  -webkit-border-radius: 15rpx;
+          border-radius: 15rpx;
+  height: 60rpx;
+  width: 60rpx;
+  margin-top: 15rpx;
+}
+.card .musicicon text {
+  position: absolute;
+  left: 140rpx;
+}
+.card .musicicon .textlike {
+  top: 10rpx;
+  font-size: 30rpx;
+}
+.card .musicicon .textdescribe {
+  top: 55rpx;
+  font-size: 15rpx;
+  color: #808080;
+}
+.songlistScroll {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  white-space: nowrap;
+  height: 220rpx;
+  margin-top: 30rpx;
+  margin-left: 30rpx;
+}
+.songlistScroll .creatItem {
+  display: inline-block;
+  padding-left: 20rpx;
+}
+.songlistScroll .creatItem image {
+  width: 200rpx;
+  height: 200rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
+}
+

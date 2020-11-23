@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "网易邮箱账号登陆",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "input-box": "/components/input-box/input-box"
+  }
+}

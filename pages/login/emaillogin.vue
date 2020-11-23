@@ -17,7 +17,7 @@
 			return {
 				email: '',
 				password: '',
-				cookietoken: ''
+				cookietoken: '',
 			};
 		},
 		methods: {
@@ -29,8 +29,10 @@
 						url: 'http://localhost:3000/login',
 						data: {
 							email: this.email,
-							md5_password: md5(this.password)
-						}
+							md5_password: md5(this.password),
+							
+						},
+						withCredentials:true
 					});
 					console.log(res[1].data.code !== 200)
 					console.log(res)
@@ -45,7 +47,8 @@
 						});
 					}
 					this.cookietoken = res[1].data.cookie
-					uni.setStorageSync('cookietoken', this.cookietoken);
+					uni.setStorageSync('cookietoken', this.cookietoken)
+					//document.cookie = this.cookietoken
 					uni.showToast({
 						icon: 'none',
 						title: '登录成功',
@@ -53,12 +56,12 @@
 						duration: 1000,
 						// #endif
 						// mask: true
-						success: () => {
-							uni.switchTab({
-								url: '/pages/home/index'
-							});
-						}
 					});
+					setTimeout(function() {
+						uni.reLaunch({
+							url: '/pages/home/index'
+						});
+					}, 1000);
 
 				}
 			}

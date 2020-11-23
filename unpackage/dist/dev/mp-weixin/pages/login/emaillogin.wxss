@@ -1,0 +1,13 @@
+button {
+  margin-top: 50rpx;
+  color: #FFFFFF;
+  width: 90%;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  -webkit-border-radius: 50px;
+          border-radius: 50px;
+  border: 1px solid #FF0033;
+  background-color: #EC4141;
+}
+

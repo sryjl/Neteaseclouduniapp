@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "手机号码登陆",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "input-box": "/components/input-box/input-box"
+  }
+}

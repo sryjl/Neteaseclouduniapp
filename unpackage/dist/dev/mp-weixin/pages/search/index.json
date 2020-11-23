@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "静流的云音乐",
   "usingComponents": {
-    "uni-search-bar": "/components/uni-search-bar/uni-search-bar"
+    "uni-search-bar": "/components/uni-search-bar/uni-search-bar",
+    "aui-dialog": "/components/aui-dialog/aui-dialog"
   }
 }
