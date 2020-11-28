@@ -18,6 +18,7 @@
 				email: '',
 				password: '',
 				cookietoken: '',
+				userid:''
 			};
 		},
 		methods: {
@@ -47,7 +48,9 @@
 						});
 					}
 					this.cookietoken = res[1].data.cookie
+					this.userid =res[1].data.account.id
 					uni.setStorageSync('cookietoken', this.cookietoken)
+					uni.setStorageSync('userid', this.userid)
 					//document.cookie = this.cookietoken
 					uni.showToast({
 						icon: 'none',

@@ -26,7 +26,13 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "静流的云音乐",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": true,
+				"app-plus":{
+					"scrollIndicator":"none",
+					"pullToRefresh":{
+						"color":"#EC4141"
+					}
+				}
             }
             
         },

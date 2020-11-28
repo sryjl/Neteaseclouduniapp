@@ -32,14 +32,14 @@
 			</view>
 			<view class="hotlist">
 				<view class="lefthot">
-					<navigator :class="{bold:index<='2'?true:false}" v-for="(item,index) in hotlist" v-if='(index+2)%2==0' :key="index"
+					<navigator :class="{bold:index<='2'?true:false}" v-for="(item,index) in hotlist" v-if='(index+2)%2==0' :key="item.score"
 					 url=""><text :class="{lessthanten:index<='8'?true:false}">{{index+1}}</text><text>{{item.searchWord}}</text>
 						<image v-if="item.iconUrl" :src="hotlist[index].iconUrl" mode="heightFix"></image>
 					</navigator>
 
 				</view>
 				<view class="righthot">
-					<navigator :class="{bold:index<='2'?true:false}" v-for="(item,index) in hotlist" v-if='(index+2)%2==1' :key="index"
+					<navigator :class="{bold:index<='2'?true:false}" v-for="(item,index) in hotlist" v-if='(index+2)%2==1' :key="item.score"
 					 url=""><text :class="{lessthanten:index<='8'?true:false}">{{index+1}}</text><text>{{item.searchWord}}</text>
 						<image v-if="item.iconUrl" :src="hotlist[index].iconUrl" mode="heightFix"></image>
 					</navigator>
@@ -114,6 +114,7 @@
 					return false
 				}
 				this.hotlist = res.data.data.slice(0, 10)
+				console.log(this.hotlist)
 			},
 			async moreHotlist(val) {
 				const [error, res] = await uni.request({
@@ -123,6 +124,7 @@
 					return false
 				}
 				this.hotlist = res.data.data
+
 				this.showView = true
 			},
 			async getsuggestion(e) {
@@ -157,7 +159,11 @@
 				console.log(res.data.result.allMatch)
 				if (!res.data.result.allMatch) {
 					this.suggestionlist = []
-				} else(this.suggestionlist = res.data.result.allMatch)
+				} else(
+					this.suggestionlist = res.data.result.allMatch
+					
+				)
+				console.log(this.suggestionlist)
 				setTimeout(() => {
 					this.isSend = false
 				}, 300)
