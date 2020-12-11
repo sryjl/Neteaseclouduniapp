@@ -1,7 +1,7 @@
 <template>
 	<view :style="{height:swiperHeight+'px'}">
 		<view @click.stop="focussearch">
-			<uni-search-bar :placeholder="searchPlaceHolder" @confirm="search(e)" v-model="keyword" @input="getsuggestion"></uni-search-bar>
+			<uni-search-bar :placeholder="searchPlaceHolder" @confirm="search" v-model="keyword" @input="getsuggestion"></uni-search-bar>
 		</view>
 		<view class="showSearchcontent" v-if="suggestionlist.length !== 0">
 			<view class="searchconent">
@@ -9,7 +9,7 @@
 			</view>
 			<view class="searchitem" v-for="(item,index) in suggestionlist" :key='index'>
 				<text class="iconfont icon-sousuo"></text>
-				<text class="itemcontent">{{item.keyword}}</text>
+				<text class="itemcontent" @click="suggestionTo(item.keyword)">{{item.keyword}}</text>
 			</view>
 		</view>
 		<view :style="{height:blurHeight+'px'}" @click="blursearch">
@@ -18,7 +18,7 @@
 				<view class="title">
 					历史
 				</view>
-				<view class="historyItem" v-for="(item,index) in historylist" :key="index">
+				<view class="historyItem" v-for="(item,index) in historylist" :key="index" @click="suggestionTo(item)">
 					{{item}}
 				</view>
 				<!-- 删除历史记录按钮 -->
@@ -32,17 +32,17 @@
 			</view>
 			<view class="hotlist">
 				<view class="lefthot">
-					<navigator :class="{bold:index<='2'?true:false}" v-for="(item,index) in hotlist" v-if='(index+2)%2==0' :key="item.score"
-					 url=""><text :class="{lessthanten:index<='8'?true:false}">{{index+1}}</text><text>{{item.searchWord}}</text>
+					<view :class="{bold:index<='2'?true:false}" v-for="(item,index) in hotlist" v-if='(index+2)%2==0' :key="item.score"
+					 @click="suggestionTo(item.searchWord)"><text :class="{lessthanten:index<='8'?true:false}">{{index+1}}</text><text>{{item.searchWord}}</text>
 						<image v-if="item.iconUrl" :src="hotlist[index].iconUrl" mode="heightFix"></image>
-					</navigator>
+					</view>
 
 				</view>
 				<view class="righthot">
-					<navigator :class="{bold:index<='2'?true:false}" v-for="(item,index) in hotlist" v-if='(index+2)%2==1' :key="item.score"
-					 url=""><text :class="{lessthanten:index<='8'?true:false}">{{index+1}}</text><text>{{item.searchWord}}</text>
+					<view :class="{bold:index<='2'?true:false}" v-for="(item,index) in hotlist" v-if='(index+2)%2==1' :key="item.score"
+					 @click="suggestionTo(item.searchWord)"><text :class="{lessthanten:index<='8'?true:false}">{{index+1}}</text><text>{{item.searchWord}}</text>
 						<image v-if="item.iconUrl" :src="hotlist[index].iconUrl" mode="heightFix"></image>
-					</navigator>
+					</view>
 				</view>
 			</view>
 			<button :class="{hotserchmore:true, iconfont:true,hide:showView}" plain @click="moreHotlist($event)">展开更多热搜&#xe791;</button>
@@ -50,8 +50,9 @@
 		<!-- au-dialog -->
 		<aui-dialog ref="dialog" :title="auiDialog.title" :msg="auiDialog.msg" :btns="auiDialog.btns" :mask="auiDialog.mask"
 		 :maskTapClose="auiDialog.maskTapClose" :items="auiDialog.items" :theme="auiDialog.theme" @callback="dialogCallback"></aui-dialog>
+	     <zaudio theme="theme3" :autoplay="false" :continue="true" ref="zaudio"></zaudio>
 	</view>
-
+	
 
 </template>
 
@@ -59,7 +60,9 @@
 	import {
 		aui
 	} from '../../components/aui-dialog/common/aui/js/aui.js'
+	import zaudio from '@/zaudio/zaudio.vue';
 	export default {
+		components:{zaudio},
 		data() {
 			return {
 				auiDialog: {
@@ -86,6 +89,13 @@
 			};
 		},
 		methods: {
+			suggestionTo(val){
+			console.log(val)
+			let obj={
+				value:val
+			}
+			this.search(obj)
+			},
 			// 回调函数解决历史删除和取消
 			dialogCallback(e) {
 				var _this = this;
@@ -97,34 +107,23 @@
 			},
 
 			async getPlaceHolder() {
-				const [error, res] = await uni.request({
-					url: 'http://localhost:3000/search/default'
+				const res = await this.$http({
+					url:'search/default'
 				})
-				if (res.data.code !== 200) {
-					return false
-				}
 				this.searchPlaceHolder = res.data.data.showKeyword
 				this.realplaceHolder = res.data.data.realkeyword
 			},
 			async getHotList() {
-				const [error, res] = await uni.request({
-					url: 'http://localhost:3000/search/hot/detail'
+				const res = await this.$http({
+					url: 'search/hot/detail'
 				})
-				if (res.data.code !== 200) {
-					return false
-				}
 				this.hotlist = res.data.data.slice(0, 10)
-				console.log(this.hotlist)
 			},
 			async moreHotlist(val) {
-				const [error, res] = await uni.request({
-					url: 'http://localhost:3000/search/hot/detail'
+				const res = await this.$http({
+					url: 'search/hot/detail'
 				})
-				if (res.data.code !== 200) {
-					return false
-				}
 				this.hotlist = res.data.data
-
 				this.showView = true
 			},
 			async getsuggestion(e) {
@@ -135,35 +134,26 @@
 					this.suggestionlist = []
 					return
 				}
-				console.log(e.value.length)
 				e = e.value.replace(/\s*/g, "")
-				console.log(e.length)
 				if (!e.length) {
 					this.suggestionlist = []
 					return
 				}
-				console.log(e)
 
 				this.isSend = true
-				const [error, res] = await uni.request({
-					url: 'http://localhost:3000/search/suggest',
+				const res = await this.$http({
+					url: 'search/suggest',
 					data: {
 						keywords: e,
 						type: 'mobile'
 					}
 				})
-				if (res.data.code !== 200) {
-					return false
-				}
-				console.log(res)
-				console.log(res.data.result.allMatch)
 				if (!res.data.result.allMatch) {
 					this.suggestionlist = []
 				} else(
 					this.suggestionlist = res.data.result.allMatch
 					
 				)
-				console.log(this.suggestionlist)
 				setTimeout(() => {
 					this.isSend = false
 				}, 300)
@@ -197,6 +187,9 @@
 					val.value = this.searchPlaceHolder
 				}
 				this.saveHistory(val.value)
+				uni.navigateTo({
+					url:'./getresult?keyword='+val.value,
+				})
 			},
 			deletehistory(theme) {
 				var _this = this;
@@ -266,7 +259,7 @@
 		margin-top: 30rpx;
 		margin-left: 4%;
 
-		navigator {
+		view {
 			font-size: 30rpx;
 			margin-bottom: 20rpx;
 			display: block;
@@ -296,7 +289,7 @@
 		float: left;
 		margin-top: 30rpx;
 
-		navigator {
+		view {
 			font-size: 30rpx;
 			margin-bottom: 20rpx;
 			display: block;

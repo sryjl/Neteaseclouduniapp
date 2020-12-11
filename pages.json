@@ -20,8 +20,14 @@
 				}
             }
             
-        }
-        ,{
+        } ,
+		{
+			"path":"pages/listGround/listground",
+			"style":{
+				"navigationBarTitleText":"歌单广场"
+			}
+		},	
+		{
             "path" : "pages/video/index",
             "style" :                                                                                    
             {
@@ -41,24 +47,12 @@
 			"style":{
 				"navigationBarTitleText":"静流的云音乐"
 			}
-		}
-        ,{
-            "path" : "pages/login/emaillogin",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "网易邮箱账号登陆",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-		,{
-		    "path" : "pages/login/phonelogin",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "手机号码登陆",
-		        "enablePullDownRefresh": false
-		    }
-		    
+		},
+		{
+		   "path":"pages/search/getresult",
+			"style":{
+				"navigationBarTitleText":"搜索结果"
+			}
 		},
 		{
 		    "path" : "pages/login/index",
@@ -68,7 +62,51 @@
 		        "enablePullDownRefresh": false
 		    }
 		    
+		},
+		{
+		    "path" : "pages/login/login",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "登陆",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+			"path":"pages/home/dailysong",
+			"style":
+			{
+				"navigationBarTitleText":"每日推荐",
+				"enablePullDownRefresh":false
+			}
+		},{
+			"path":"pages/comment/comment",
+			"style":{
+				"navigationStyle":"custom"
+			}
+			
+		},
+		
+		{
+			"path":"pages/songDtail/songDtail",
+			"style":{
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path":"pages/test/test",
+			"style":{
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path":"pages/songlist/songlist",
+			"style":{
+				"navigationStyle":"custom"
+			}
 		}
+		
+		
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

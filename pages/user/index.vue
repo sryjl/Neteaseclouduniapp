@@ -1,104 +1,118 @@
 <template>
-	<view class="main">
-		<!-- 用户头像背景等级等 -->
-		<view class="userpic">
-			<image class="userimg" v-if="userimg !=''" :src="userimg" mode="aspectFit"></image>
-		    <image class="userimg" v-if="userimg == ''" src="../../static/picture/nahatenahte.png" mode="aspectFit" @click="login"></image>
-			<image class="userbg" v-if="userbackground !=''" :src="userbackground" mode="aspectFill"></image>
-			<image class="userbg" v-if="userbackground ==''" src="../../static/picture/nahateaile.png" mode="aspectFill"></image>
-			<view class="username">
-				{{username}}
-			</view>
-			<view class="username" v-if="userid == ''">
-				点击头像登陆
-			</view>
-			<view class="userlevel">
-				Lv.{{userlevel}}
-			</view>
-			<view class="userlevel" v-if="userid == ''">
-				Lv.0
-			</view>
-		</view>
-		<!-- 用户粉丝和关注 -->
-		<view class="userdetail">
-			<view class="userlike">
-				<text class="data">{{listenSongs}}</text>
-				<text class="write">听过</text>
-			</view>
-			<view class="userlisetn">
-				<text class="data">{{usercreatelistnum}}</text>
-				<text class="write">歌单</text>
-			</view>
-			<view class="follow">
-				<text class="data">{{follow}}</text>
-				<text class="write">关注</text>
-			</view>
-			<view class="fans">
-				<text class="data">{{fans}}</text>
-				<text class="write">粉丝</text>
-			</view>
-		</view>
-		<!-- card模组 歌单，等级，我的评论等等等的card-->
-		<view class="card">
-			<!-- 最近播放 -->
-			<navigator class="musicicon">
-				<image class="musicnavgate " src="../../static/icon/ranklist.png" mode="aspectFit"></image>
-				<text class="textlike">听歌排行</text>
-				<text class="textdescribe" v-if="listenSongs != ''">累计听歌{{listenSongs}}首</text>
-			</navigator>
+	<view>
 
-			<!-- 我喜欢的音乐 -->
-			<navigator class="musicicon">
-				<image class="musicnavgate " src="../../static/icon/love.png" mode="aspectFit"></image>
-				<text class="textlike">我喜欢的音乐</text>
-				<text class="textdescribe" v-if="trackCount != ''">{{trackCount}}首，播放{{playCount}}次</text>
-			</navigator>
-		</view>
-
-
-		<view class="card2">
-			<!-- 我的歌单 自建-->
-			<text class="title">我的歌单<text v-if="usersonglist.length>0">({{usercreatelistnum}}个，被收藏{{playlistBeSubscribedCount}}次)</text></text>
-			<scroll-view scroll-x="true" enable-flex="true" class="songlistScroll" v-if="usersonglist.length>0">
-				<view v-for="(item,index) in usersonglist" v-if="index>=1" :class="{creatItem:true,havepadding:index==usersonglist.length-1?true:false}"
-				 :key="item.id">
-					<image :src="item.coverImgUrl" mode="aspectFit"></image>
+		<scroll-view scroll-y="true" :style="{height:audiolist.length===0?mainHeight+'px':videomainHeight+'px'}">
+			<view class="main">
+				<!-- 用户头像背景等级等 -->
+				<view class="userpic">
+					<image class="userimg" v-if="userimg !=''" :src="userimg" mode="aspectFit" lazy-load='true'></image>
+					<image class="userimg" v-if="userimg == ''" src="../../static/picture/nahatenahte.png" mode="aspectFit" @click="login"></image>
+					<image class="userbg" v-if="userbackground !=''" :src="userbackground" mode="aspectFill" lazy-load='true'></image>
+					<image class="userbg" v-if="userbackground ==''" src="../../static/picture/nahateaile.png" mode="aspectFill"></image>
+					<view class="username">
+						{{username}}
+					</view>
+					<view class="username" v-if="userid == ''">
+						点击头像登陆
+					</view>
+					<view class="userlevel">
+						Lv.{{userlevel}}
+					</view>
+					<view class="userlevel" v-if="userid == ''">
+						Lv.0
+					</view>
 				</view>
-			</scroll-view>
-			<view v-else class="wait">
-				<text>暂无歌单</text>
-			</view>
-		</view>
-		<!-- 我的歌单收藏 -->
-		<view class="card3">
-			<text class="title">收藏歌单</text>
-			<scroll-view scroll-x="true" enable-flex="true" class="songlistScroll" v-if="userlikelist.length>0">
-				<view v-for="(item,index) in userlikelist" :class="{creatItem:true,havepadding:index==userlikelist.length-1?true:false}"
-				 :key="item.id">
-					<image :src="item.coverImgUrl" mode="aspectFit"></image>
+				<!-- 用户粉丝和关注 -->
+				<view class="userdetail">
+					<view class="userlike">
+						<text class="data">{{listenSongs}}</text>
+						<text class="write">听过</text>
+					</view>
+					<view class="userlisetn">
+						<text class="data">{{usercreatelistnum}}</text>
+						<text class="write">歌单</text>
+					</view>
+					<view class="follow">
+						<text class="data">{{follow}}</text>
+						<text class="write">关注</text>
+					</view>
+					<view class="fans">
+						<text class="data">{{fans}}</text>
+						<text class="write">粉丝</text>
+					</view>
 				</view>
-			</scroll-view>
-			<view v-else class="wait">
-				<text>暂无歌单</text>
+				<!-- card模组 歌单，等级，我的评论等等等的card-->
+				<view class="card">
+					<!-- 最近播放 -->
+					<navigator class="musicicon">
+						<image class="musicnavgate " src="../../static/icon/ranklist.png" mode="aspectFit"></image>
+						<text class="textlike">听歌排行</text>
+						<text class="textdescribe" v-if="listenSongs != ''">累计听歌{{listenSongs}}首</text>
+					</navigator>
+
+					<!-- 我喜欢的音乐 -->
+					<navigator :url="'../songlist/songlist?id='+likeid" class="musicicon">
+						<image class="musicnavgate " src="../../static/icon/love.png" mode="aspectFit"></image>
+						<text class="textlike">我喜欢的音乐</text>
+						<text class="textdescribe" v-if="trackCount != ''">{{trackCount}}首，播放{{playCount}}次</text>
+					</navigator>
+				</view>
+
+
+				<view class="card2">
+					<!-- 我的歌单 自建-->
+					<text class="title1">我的歌单<text v-if="usersonglist.length>0">({{usercreatelistnum}}个，被收藏{{playlistBeSubscribedCount}}次)</text></text>
+					<scroll-view scroll-x="true" enable-flex="true" class="songlistScroll" v-if="usersonglist.length>0">
+						<view v-for="(item,index) in usersonglist" v-if="index>=1" :class="{creatItem:true,havepadding:index==usersonglist.length-1?true:false}"
+						 :key="item.id" @click="tosonglist(item.id)">
+							<image :src="item.coverImgUrl" mode="aspectFit" lazy-load='true'></image>
+						</view>
+					</scroll-view>
+					<view v-else class="wait">
+						<text>暂无歌单</text>
+					</view>
+				</view>
+				<!-- 我的歌单收藏 -->
+				<view class="card3">
+					<text class="title1">收藏歌单</text>
+					<scroll-view scroll-x="true" enable-flex="true" class="songlistScroll" v-if="userlikelist.length>0">
+						<view v-for="(item,index) in userlikelist" :class="{creatItem:true,havepadding:index==userlikelist.length-1?true:false}"
+						 :key="item.id" @click="tosonglist(item.id)">
+							<image :src="item.coverImgUrl" mode="aspectFit" lazy-load='true'></image>
+						</view>
+					</scroll-view>
+					<view v-else class="wait">
+						<text>暂无歌单</text>
+					</view>
+				</view>
+				<!-- 登出按钮 -->
+				<view class="loginout">
+					<button type="default" plain @click="loginout(2)" v-if="userid != ''">退出登陆</button>
+				</view>
+				<!-- 确认登出 -->
+				<aui-dialog ref="dialog" :title="auiDialog.title" :msg="auiDialog.msg" :btns="auiDialog.btns" :mask="auiDialog.mask"
+				 :maskTapClose="auiDialog.maskTapClose" :items="auiDialog.items" :theme="auiDialog.theme" @callback="dialogCallback"></aui-dialog>
 			</view>
-		</view>
-		<!-- 登出按钮 -->
-		<view class="loginout">
-			<button type="default" plain @click="loginout(2)" v-if="userid != ''">退出登陆</button>
-		</view>
-		<!-- 确认登出 -->
-		<aui-dialog ref="dialog" :title="auiDialog.title" :msg="auiDialog.msg" :btns="auiDialog.btns" :mask="auiDialog.mask"
-		 :maskTapClose="auiDialog.maskTapClose" :items="auiDialog.items" :theme="auiDialog.theme" @callback="dialogCallback"></aui-dialog>
+		</scroll-view>
+		<zaudio theme="theme3" :autoplay="false" :continue="true" ref="zaudio"></zaudio>
 	</view>
-
-
 
 </template>
 
 <script>
+	import zaudio from '@/zaudio/zaudio.vue';
+	import {
+		mapGetters,
+		mapMutations
+	} from 'vuex';
 	export default {
+		components: {
+			zaudio
+		},
 		data() {
 			return {
+				videomainHeight: 500,
+				mainHeight: 500,
 				auiDialog: {
 					title: '',
 					msg: '',
@@ -128,37 +142,86 @@
 				playCount: '',
 				// 收藏数
 				playlistBeSubscribedCount: '',
+				likeid: 0
 			};
 		},
+		computed: {
+			...mapGetters(['audiolist', 'playinfo'])
+		},
 		methods: {
+			...mapMutations(['set_audiolist', 'set_playinfo', 'set_audio']),
+			//经典跳转到songlist
+			tosonglist(e) {
+				uni.navigateTo({
+					url: '../songlist/songlist?id=' + e,
+				})
+			},
 			//回调函数解决登出
 			async dialogCallback(e) {
 				var _this = this;
 				if (e.index == "0") {
 					return
 				}
-				const res = await uni.request({
-					url: 'http://localhost:3000/logout',
-					withCredentials: true
+				await this.$http({
+					url: 'logout'
 				})
 				uni.removeStorageSync('cookietoken')
 				// 删除cookie
+
+				// #ifdef H5
+				console.log('删除cookie')
 				this.deleteCookie()
+				// #endif
 				// 跳转，重载入页面
+				// #ifdef APP-PLUS
+				console.log('删除cookie')
+				plus.navigator.removeAllCookie()
+
+				// #endif	
+				console.log(this.$audio)
+				this.$audio.stop()
+				this.$audio.destroy()
+				this.$audio.started = false
+				this.set_audiolist({
+					data: [],
+					status: false
+				})
+				this.set_audio(
+					{ //全部清零
+						current: '00:00', //当前时间
+						duration: '00:00', //总时间
+						duration_value: 0, //总长度
+						current_value: 0, //当前长度
+						src: '', //当前音频地址
+						title: '', //当前音频标题
+						singer: '', //当前音频作者
+						coverImgUrl: '', //当前音频封面
+					})
+				this.set_playinfo(
+					{ //全部清零
+						current: '00:00', //当前时间
+						duration: '00:00', //总时间
+						duration_value: 0, //总长度
+						current_value: 0, //当前长度
+						src: '', //当前音频地址
+						title: '', //当前音频标题
+						singer: '', //当前音频作者
+						coverImgUrl: '', //当前音频封面
+					}
+				)
 				uni.reLaunch({
 					url: '/pages/user/index',
 					//5+app plus.navigator.removeAllCookie()	
 				});
-				
-				
+
+
 			},
 			// 删除cookie
-			deleteCookie()
-			{
+			deleteCookie() {
 				console.log('触发了')
 				const res = this.$cookies.keys()
 				console.log(res)
-				res.forEach(item=>{
+				res.forEach(item => {
 					$cookies.remove(item)
 				})
 			},
@@ -167,18 +230,13 @@
 				//小程序不支持cookie，此处为了以后调用cookie
 				const val = uni.getStorageSync('cookietoken')
 				if (val) {
-					const res = await uni.request({
-						url: 'http://localhost:3000/user/account',
-						withCredentials: true
+					const res = await this.$http({
+						url: 'user/account',
 					})
-					if (!res[1].data.profile) {
-						return
-					}
-					this.userid = res[1].data.profile.userId
-					console.log(this.userid)
-					this.username = res[1].data.profile.nickname
-					this.userimg = res[1].data.profile.avatarUrl
-					this.userbackground = res[1].data.profile.backgroundUrl
+					this.userid = res.data.profile.userId
+					this.username = res.data.profile.nickname
+					this.userimg = res.data.profile.avatarUrl
+					this.userbackground = res.data.profile.backgroundUrl
 					//获取用户详情
 					this.getuserdetail()
 					this.getsonglist()
@@ -186,16 +244,16 @@
 			},
 			//歌单获取
 			async getsonglist() {
-				const res = await uni.request({
-					url: 'http://localhost:3000/user/playlist',
+				const res = await this.$http({
+					url: 'user/playlist',
 					data: {
 						uid: this.userid,
 					},
-					withCredentials: true
 				})
-				this.playCount = res[1].data.playlist[0].playCount
-				this.trackCount = res[1].data.playlist[0].trackCount
-				res[1].data.playlist.forEach((item) => {
+				this.likeid = res.data.playlist[0].id
+				this.playCount = res.data.playlist[0].playCount
+				this.trackCount = res.data.playlist[0].trackCount
+				res.data.playlist.forEach((item) => {
 						if (item.userId == this.userid) {
 							this.usersonglist.push({
 								id: item.id,
@@ -214,25 +272,25 @@
 					}
 
 				)
-				console.log(this.usersonglist)
-				console.log(this.userlikelist)
+				// console.log(this.usersonglist)
+				// console.log(this.userlikelist)
 			},
 			//做其他用户界面的时候要封装出去
+			// 获取用户的一些基本信息
 			async getuserdetail() {
-				const res = await uni.request({
-					url: 'http://localhost:3000/user/detail',
+				const res = await this.$http({
+					url: 'user/detail',
 					data: {
 						uid: this.userid
 					},
-					withCredentials: true
 				})
-				console.log(res)
-				this.userlevel = res[1].data.level
-				this.follow = res[1].data.profile.follows
-				this.fans = res[1].data.profile.followeds
-				this.usercreatelistnum = res[1].data.profile.playlistCount - 1
-				this.playlistBeSubscribedCount = res[1].data.profile.playlistBeSubscribedCount
-				this.listenSongs = res[1].data.listenSongs
+				// console.log(res)
+				this.userlevel = res.data.level
+				this.follow = res.data.profile.follows
+				this.fans = res.data.profile.followeds
+				this.usercreatelistnum = res.data.profile.playlistCount - 1
+				this.playlistBeSubscribedCount = res.data.profile.playlistBeSubscribedCount
+				this.listenSongs = res.data.listenSongs
 			},
 			loginout(theme) {
 				var _this = this;
@@ -249,20 +307,24 @@
 				_this.auiDialog.theme = theme;
 				_this.$refs.dialog.show();
 			},
-			login(){
+			login() {
 				console.log('触发了')
 				uni.navigateTo({
-					url:'../login/index'
+					url: '../login/index'
 				})
 			}
 		},
 		created() {
-			
+
 			// this.getlevel()	
 		},
 		onLoad() {
 			this.getaccount()
-			}
+			const Magnification = uni.getSystemInfoSync().windowWidth / 750
+			this.mainHeight = uni.getSystemInfoSync().windowHeight
+			this.videomainHeight = uni.getSystemInfoSync().windowHeight - 150 * Magnification
+		}
+
 	}
 </script>
 
@@ -355,7 +417,7 @@
 				display: block;
 				color: #808080;
 				padding-top: 15rpx;
-				font-size: 15rpx;
+				font-size: 25rpx;
 			}
 		}
 	}
@@ -392,7 +454,7 @@
 
 			.textdescribe {
 				top: 55rpx;
-				font-size: 15rpx;
+				font-size: 25rpx;
 				color: #808080;
 			}
 		}
@@ -421,7 +483,7 @@
 		}
 	}
 
-	.title {
+	.title1 {
 		display: block;
 		width: 100%;
 		height: 40rpx;
@@ -432,24 +494,27 @@
 		border-bottom: 1px solid #E9EBEC;
 
 		text {
-			font-size: 20rpx;
+			font-size: 25rpx;
 			font-weight: normal;
 			color: #808080;
 			padding-left: 10rpx;
 		}
 	}
-	.wait{
+
+	.wait {
 		height: 100rpx;
-		text{
+
+		text {
 			height: 100rpx;
 			line-height: 100rpx;
 			font-size: 30rpx;
-			margin-left:10%;
+			margin-left: 10%;
 		}
 	}
-	button{
+
+	button {
 		margin-top: 50rpx;
-		margin-bottom:10rpx;
+		margin-bottom: 10rpx;
 		width: 100%;
 		border-radius: 20rpx;
 		font-size: 30rpx;

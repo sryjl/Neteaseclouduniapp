@@ -13,8 +13,8 @@
 		<!-- button登陆按钮 -->
 		<view class="button">
 			<view class="buttonchild">
-				<navigator url="/pages/login/emaillogin"><button type="default" plain>邮箱登陆</button></navigator>
-				<navigator url="/pages/login/phonelogin"><button type="default" plain>手机登陆</button></navigator>
+				<navigator url="/pages/login/login?thisNum=1"><button type="default" plain>邮箱登陆</button></navigator>
+				<navigator url="/pages/login/login?thisNum=2"><button type="default" plain>手机登陆</button></navigator>
 			</view>
 		</view>
 	</view>
