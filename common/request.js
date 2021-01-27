@@ -1,7 +1,7 @@
 // 不封装request要死了，这脑残玩意
 const request = (config) => {
 	// 处理 apiUrl
-	config.url = '' + config.url;
+	config.url = 'http://localhost:3000/' + config.url;
 	if(!config.data){
 		config.data = {};
 	}

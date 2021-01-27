@@ -58,6 +58,7 @@
 						<text @click="showChild(item.commentId)" class="morecontent" v-show="item.showFloorComment.replyCount > 0 ">{{item.showFloorComment.replyCount}}条回复<text class="iconfont icon-xiangyou"></text></text>
 					</view>
 				</view>
+				<view class="ageli"></view>
 			</scroll-view>
 		</view>
 	    <!-- 楼中楼 -->
@@ -68,8 +69,7 @@
 	    			<text>回复</text>
 	    			<text>({{childCommentCount}})</text>
 	    		</view>
-				<scroll-view scroll-y="true" :style="{height:subHeight +'px'}"  @scrolltolower = "getMoreChildComment(parent.commentId)">
-						
+				<scroll-view scroll-y="true" :style="{height:subHeight +'px'}"  @scrolltolower = "getMoreChildComment(parent.commentId)">		
 					<view class="com">
 						<view class="user">
 							<view>
@@ -117,19 +117,27 @@
 							</view>
 						</view>
 					</view>
+				    <view class="ageli"></view>
 				</scroll-view>
-	    	</view>
-	    </view>
+			</view>
+
+		</view>
 		<button @click="toggleMask('show')" class="botton">评论</button>
+		<!-- <button @click="tips" class="botton">测试</button> -->
 		<ygc-comment ref="ygcComment"
 		    :placeholder="'发布评论'" 
-			@pubComment="pubComment"></ygc-comment>
+			:id="id"
+			:parentCommentId= 'parentCommentId'
+			@changeTips="tips"
+			></ygc-comment>
+		<HMmessages ref="HMmessages" @complete="HMmessages = $refs.HMmessages" @clickMessage="clickMessage"></HMmessages>
 	</view>
 </template>
 
 <script>
+	import HMmessages from "@/components/HM-messages/HM-messages.vue"
 	export default {
-	
+		components: {HMmessages},
 		data() {
 			return {
 				showchild:false,
@@ -167,14 +175,11 @@
 					al:{
 						picUrl:''
 					}
-				}
+				},
+				parentCommentId:''
 			}
 		},
 		methods:{
-			//发布的回调
-			pubComment(){
-				
-			},
 			//显示评论
 			toggleMask(type) {
 				this.$refs.ygcComment.toggleMask(type);
@@ -202,6 +207,7 @@
 			},
 			//时间戳转换方法
 			async showChild(Id){
+				this.parentCommentId = Id
 				const res = await this.$http({
 					url:'comment/floor',
 					data:{
@@ -242,6 +248,7 @@
 				this.showchild = false
 				this.moreTime = 0
 				this.bisechild = 0
+				this.parentCommentId = ''
 			},
 			getdate(e){
 				let thisdate = new Date(e)
@@ -257,6 +264,11 @@
 					return y+'年'+(m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d)+'日'
 					}
 				
+			},
+			tips(){
+				this.HMmessages.show('评论发布成功',{
+				icon:'success'
+				})
 			},
 			//获取详情
 			async getDetail(){
@@ -340,6 +352,9 @@
 </script>
 
 <style lang="less">
+	.ageli{
+		height: 100rpx;
+	}
 	.botton{
 		position: absolute;
 		bottom: 40rpx;

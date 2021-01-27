@@ -24,8 +24,26 @@
 						<text class="creator">{{item.trackCount}}首，by{{item.creator.nickname}}，播放{{item.playCount}}次</text>
 			        </view>
 				</view>
-				<view class="geli">
-					
+				<view class="songlistItem" v-show="type===100" v-for="(item,index) in artistlists" :key = 'item.id' @click="">
+					<image :src="item.picUrl?item.picUrl:item.img1v1Url" mode="aspectFit" lazy-load="true"></image>
+				    <view class="songlistdetail">
+				    	<text class="name">{{item.name}}</text>
+				    </view>
+				</view>	
+				<view class="songlistItem" v-show="type===10" v-for="(item,index) in albumlists" :key = 'item.id' @click="tosonglist(item.id)">
+					<image :src="item.blurPicUrl" mode="aspectFit" lazy-load="true"></image>
+				    <view class="songlistdetail">
+				    	<text class="name">{{item.name}}</text>
+						<text class="creator">歌手：{{item.artist.name}}</text>
+				    </view>
+				</view>
+				<view class="songlistItem" v-show="type===1002" v-for="(item,index) in userlists" :key = 'item.id' @click="tosonglist(item.id)">
+					<image :src="item.avatarUrl" mode="aspectFit" lazy-load="true"></image>
+				    <view class="songlistdetail">
+				    	<text class="name">{{item.nickname}}</text>
+				    </view>
+				</view>
+				<view class="geli">		
 				</view>
 			</scroll-view>
 		</view>
@@ -57,7 +75,10 @@
 				songlist:[],
 				userprofiles:[],
 				playlists:[],
-				songIdList:[]
+				songIdList:[],
+				artistlists:[],
+				albumlists:[],
+				userlists:[]
 			}
 		},
 		methods:{
@@ -117,6 +138,15 @@
 				}else if(type === 1000){
 					this.playlists = res.data.result.playlists
 					count =res.data.result.playlistCount
+				}else if(type === 100){
+					this.artistlists = res.data.result.artists
+					count = res.data.result.artistCount
+				}else if(type === 10){
+					this.albumlists = res.data.result.albums
+					count = res.data.result.albumCount
+				}else if(type === 1002){
+					this.userlists = res.data.result.userprofiles
+					count = res.data.result.userprofileCount
 				}
 				
 				uni.setNavigationBarTitle({

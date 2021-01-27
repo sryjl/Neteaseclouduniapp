@@ -69,10 +69,11 @@
 		</view>
 		<!-- 音乐日历 -->
 		<!-- 专属场景歌单 -->
-		<aui-scroll-view title="专属场景歌单" detail="查看更多" :list="forulist"></aui-scroll-view>
+		<!-- <aui-scroll-view title="专属场景歌单" detail="查看更多" :list="forulist"></aui-scroll-view> -->
 		<!-- 大家都在听 没找到接口-->
+		<!-- api好像这边又改了，所以做一个暂时的紧急处理 -->
 		<!-- 直播 白色的火太阴间了，不过直播本来就很阴间，不准备做直播详细模块，sorr -->
-		<aui-scroll-view v-show="livelist.length !== 0" title="语音直播" detail="查看更多" :list="livelist" :typeStyle='2'></aui-scroll-view>
+		<!-- <aui-scroll-view v-show="livelist.length !== 0" title="语音直播" detail="查看更多" :list="livelist" :typeStyle='2'></aui-scroll-view> -->
 		<!-- 排行榜 -->
 		<!-- 电台推荐 -->
 		<!-- <aui-scroll-view title="孤独的心此处安放" detail="查看更多" :list="djlist" :typeStyle='3'></aui-scroll-view> -->
@@ -138,12 +139,13 @@
 								timestamp:timestamp
 							},
 						})
+						console.log(res)
 						const val = uni.getStorageSync('cookietoken')
 						//由于有cookie的请求和无cookie的请求所获取的数据不同，但用相同的部分
 						//所以在有cookie的时候和无cookie的时候取得对象不同
-						let first = 0
-						let second = 1 
-						let third = 2
+						let first = 1
+						let second = 2
+						let third = 3
 						if(val){
 							this.livelist = res.data.data.blocks[3].extInfo
 						}else{
@@ -151,7 +153,6 @@
 							second = 2
 							third = 4
 						}
-						
 						res.data.data.blocks[first].creatives.forEach(item => {
 							this.recommendsonglist.push(item.resources[0])
 						})
