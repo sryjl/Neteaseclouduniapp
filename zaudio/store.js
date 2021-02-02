@@ -28,7 +28,8 @@ export default {
 		paused: true, //$audio对象当前播放音频的暂停状态
 
 		n_pause: false, //$audio对象当前播放音频的意外中断的状态
-
+		
+		isone:false,//当前是否是单曲循环状态
 
 	},
 	mutations: {
@@ -52,6 +53,9 @@ export default {
 				}
 				
 			}
+		},
+		set_delaudiolist(state,index){
+			state.audiolist.splice(index, 1)
 		},
 		//设置zaudio组件当前渲染的音频信息
 		set_audio(state, data) {
@@ -109,6 +113,9 @@ export default {
 		set_n_pause(state, data) {
 			state.n_pause = data
 		},
+		set_isone(state,data){
+			state.isone = data
+		},
 
 		//设置渲染索引 和 渲染信息
 		set_renderIndex(state, data) {
@@ -134,6 +141,7 @@ export default {
 		paused: state => state.paused,
 		renderIndex: state => state.renderIndex,
 		audio: state => state.audio,
+		isone:state=>state.isone,
 		playIndex: state => {
 			let index = state.audiolist.findIndex(i => i.src == state.playinfo.src)
 			return index <= 0 ? 0 : index

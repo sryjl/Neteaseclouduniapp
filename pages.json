@@ -79,7 +79,16 @@
 				"navigationBarTitleText":"每日推荐",
 				"enablePullDownRefresh":false
 			}
-		},{
+		},		
+		{
+			"path":"pages/singer/index",
+			"style":
+			{
+				"navigationBarTitleText":"",
+				"enablePullDownRefresh":false
+			}
+		},
+		{
 			"path":"pages/comment/comment",
 			"style":{
 				"navigationStyle":"custom"

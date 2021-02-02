@@ -110,7 +110,7 @@
 			format() {
 				return num => formatSeconds(num);
 			},
-			...mapGetters(['audiolist', 'playinfo', 'n_pause', 'paused', 'renderIndex', 'audio', 'playIndex', 'renderIsPlay']),
+			...mapGetters(['isone','audiolist', 'playinfo', 'n_pause', 'paused', 'renderIndex', 'audio', 'playIndex', 'renderIsPlay']),
 			renderData() {
 				return name => {
 					if (!this.renderIsPlay) {
@@ -139,7 +139,7 @@
 				})
 			},
 			audioInit() {
-				
+
 				if (this.$audio.started) return;
 				this.$audio.started = true;
 				console.log('$audio开始监听事件');
@@ -167,7 +167,7 @@
 
 				this.$audio.onPause(() => {
 					this.set_pause(true);
-					
+
 				});
 
 				this.$audio.onStop(() => {
@@ -181,7 +181,9 @@
 						current_value: '0'
 					});
 					//续播
-					if (this.continue) {
+					if (this.isone) {
+						this.changeplay(0);
+					}else{
 						this.changeplay(1);
 					}
 				});
@@ -317,7 +319,6 @@
 			},
 			//切歌
 			changeplay(count) {
-				
 				var nowindex = this.renderIndex;
 				nowindex += count;
 
@@ -326,7 +327,7 @@
 				//更新渲染数据的索引值
 				this.set_renderIndex(nowindex);
 				this.operation();
-				uni.$emit('updata')		
+				uni.$emit('updata')
 			},
 		}
 	};

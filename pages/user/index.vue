@@ -1,6 +1,5 @@
 <template>
 	<view>
-
 		<scroll-view scroll-y="true" :style="{height:audiolist.length===0?mainHeight+'px':videomainHeight+'px'}">
 			<view class="main">
 				<!-- 用户头像背景等级等 -->
@@ -96,7 +95,6 @@
 		</scroll-view>
 		<zaudio theme="theme3" :autoplay="false" :continue="true" ref="zaudio"></zaudio>
 	</view>
-
 </template>
 
 <script>

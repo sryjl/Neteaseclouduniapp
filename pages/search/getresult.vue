@@ -24,13 +24,13 @@
 						<text class="creator">{{item.trackCount}}首，by{{item.creator.nickname}}，播放{{item.playCount}}次</text>
 			        </view>
 				</view>
-				<view class="songlistItem" v-show="type===100" v-for="(item,index) in artistlists" :key = 'item.id' @click="">
+				<view class="songlistItem" v-show="type===100" v-for="(item,index) in artistlists" :key = 'item.id' @click="toSinger(item.id)">
 					<image :src="item.picUrl?item.picUrl:item.img1v1Url" mode="aspectFit" lazy-load="true"></image>
 				    <view class="songlistdetail">
 				    	<text class="name">{{item.name}}</text>
 				    </view>
 				</view>	
-				<view class="songlistItem" v-show="type===10" v-for="(item,index) in albumlists" :key = 'item.id' @click="tosonglist(item.id)">
+				<view class="songlistItem" v-show="type===10" v-for="(item,index) in albumlists" :key = 'item.id' @click="toSinger(item.id)">
 					<image :src="item.blurPicUrl" mode="aspectFit" lazy-load="true"></image>
 				    <view class="songlistdetail">
 				    	<text class="name">{{item.name}}</text>
@@ -109,6 +109,12 @@
 				this.songIdList = [songdetail]
 				console.log(this.songIdList)
 				this.toSongDetail(item.id,item.fee)
+			},
+			toSinger(e) {
+				console.log(e)
+				uni.navigateTo({
+					url: '../singer/index?id=' + e,
+				})
 			},
 			tosonglist(e){
 				uni.navigateTo({
